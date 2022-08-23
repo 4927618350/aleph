@@ -1,0 +1,1 @@
+..\tolset\z_tools\nask.exe main.nas main.img
