@@ -1,1 +1,1 @@
-..\tolset\z_tools\nask.exe main.nas main.img
+..\tolset\z_tools\nask.exe ipl.nas ipl.bin ipl.lst
