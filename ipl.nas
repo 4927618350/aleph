@@ -34,6 +34,8 @@ entry:
 		MOV		CH,0			; 柱面
 		MOV		DH,0			; 磁头
 		MOV		CL,2			; 扇区
+
+readloop:
 		MOV		SI,0			; 记录读取尝试次数
 
 retry:
@@ -42,7 +44,7 @@ retry:
 		MOV		BX,0			; 缓冲地址
 		MOV		DL,0x00			; 驱动器号
 		INT		0x13			; bios:磁盘 成功CF=0 失败CF=1错误码存在AH
-		JNC		fin				; if(CF=0)
+		JNC		next				; if(CF=0)
 		ADD		SI,1			; 增加尝试次数
 		CMP		SI,5
 		JAE		error			; jump if above or equal
@@ -50,6 +52,14 @@ retry:
 		MOV		DL,0x00
 		INT		0x13			; 重置
 		JMP		retry
+
+next:
+		MOV		AX,ES
+		ADD		AX,0x0020
+		MOV		ES,AX			; 将ES后移0x0020
+		ADD		CL,1			; 下一扇区
+		CMP		CL,18			; 读18个扇区
+		JBE		readloop		; jump if below or equal
 
 fin:
 		HLT
