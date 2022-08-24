@@ -2,25 +2,25 @@
 
 main:
         ORG     0x7c00
-        JMP entry
-        DB	    0x90
-        DB	    "ALEPHIPL"      ;启动区名称（8B）
-        DW	    512				
-        DB	    1				
-        DW	    1				
-        DB	    2				
-        DW	    224				
-        DW		2880			
-        DB	    0xf0			
-        DW	    9				
-        DW	    18				
-        DW	    2				
-        DD	    0				
-        DD	    2880			
-        DB	    0,0,0x29		
-        DD		0xffffffff		
-        DB		"ALEPH-OS   "	;磁盘名称（11B）
-        DB		"FAT12   " 	
+        JMP     entry
+        DB	0x90
+        DB	"ALEPHIPL"      ;启动区名称（8B）
+        DW	512				
+        DB	1				
+        DW	1				
+        DB	2				
+        DW	224				
+        DW      2880			
+        DB	0xf0			
+        DW	9				
+        DW	18				
+        DW	2				
+        DD	0				
+        DD	2880			
+        DB      0,0,0x29		
+        DD      0xffffffff		
+        DB	"ALEPH-OS   "	;磁盘名称（11B）
+        DB	"FAT12   "
         RESB	18				
 
 entry:
@@ -46,11 +46,11 @@ fin:
         JMP     fin
 
 msg:
-        DB		0x0a, 0x0a      ;\n\n
-        DB		"hello,bug" 
-        DB		0x0a			
-        DB		0
+        DB      0x0a, 0x0a      ;\n\n
+        DB	"hello,bug" 
+        DB	0x0a			
+        DB	0
         RESB	0x7dfe-$    ;写0x00到0x7dfe		
-        DB		0x55, 0xaa
+        DB	0x55, 0xaa
 
-JMP main
+JMP     main
