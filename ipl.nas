@@ -34,23 +34,29 @@ entry:
 		MOV		CH,0			; 柱面
 		MOV		DH,0			; 磁头
 		MOV		CL,2			; 扇区
+		MOV		SI,0			; 记录读取尝试次数
+
+retry:
 		MOV		AH,0x02			; 0x02读盘 0x03写盘 0x04效验 0x0c寻道
 		MOV		AL,1			; 1个扇区
 		MOV		BX,0			; 缓冲地址
 		MOV		DL,0x00			; 驱动器号
 		INT		0x13			; bios:磁盘 成功CF=0 失败CF=1错误码存在AH
-		JC		error			; if(CF==0)
+		JNC		fin				; if(CF=0)
+		ADD		SI,1			; 增加尝试次数
+		CMP		SI,5
+		JAE		error			; jump if above or equal
+		MOV		AH,0x00
+		MOV		DL,0x00
+		INT		0x13			; 重置
+		JMP		retry
+
+fin:
+		HLT
+		JMP     fin
 
 error:
 		MOV		SI,msg
-
-msg:
-		DB      0x0a, 0x0a		; \n\n
-		DB		"error" 
-		DB		0x0a			
-		DB		0
-		RESB	0x7dfe-$    	; 写0x00到0x7dfe		
-		DB		0x55, 0xaa
 
 showloop:
 		MOV     AL,BYTE[SI]
@@ -62,8 +68,12 @@ showloop:
 		INT     0x10        	; bios:显卡
 		JMP     showloop
 
-fin:
-		HLT
-		JMP     fin
+msg:
+		DB      0x0a, 0x0a		; \n\n
+		DB		"error" 
+		DB		0x0a			
+		DB		0
+		RESB	0x7dfe-$    	; 写0x00到0x7dfe		
+		DB		0x55, 0xaa
 
 JMP		main
