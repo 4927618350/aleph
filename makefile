@@ -10,7 +10,7 @@ lst_name	= ipl.lst
 img_name	= aleph.img
 
 default:
-	..\tolset\z_tools\make.exe -r run
+	$(make) run
 
 $(img_name):$(bin_name)
 	$(edimg)\

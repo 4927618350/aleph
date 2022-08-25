@@ -1,6 +1,8 @@
 ; aleph-os
 ; TAB=4
 
+CYLS	EQU		10				; #define CYLS 10//读取10个柱面
+
 main:
 		ORG     0x7c00
 		JMP     entry
@@ -44,7 +46,7 @@ retry:
 		MOV		BX,0			; 缓冲地址
 		MOV		DL,0x00			; 驱动器号
 		INT		0x13			; bios:磁盘 成功CF=0 失败CF=1错误码存在AH
-		JNC		next				; if(CF=0)
+		JNC		next			; if(CF=0)
 		ADD		SI,1			; 增加尝试次数
 		CMP		SI,5
 		JAE		error			; jump if above or equal
@@ -60,6 +62,14 @@ next:
 		ADD		CL,1			; 下一扇区
 		CMP		CL,18			; 读18个扇区
 		JBE		readloop		; jump if below or equal
+		MOV		CL,1
+		ADD		DH,1			; 下一个磁头
+		CMP		DH,2
+		JB		readloop		; jump if below
+		MOV		DH,0
+		ADD		CH,1			; 下一个柱面
+		CMP		CH,CYLS			; 读CYLS个柱面
+		JB		readloop		
 
 fin:
 		HLT
