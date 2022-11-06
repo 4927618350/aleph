@@ -1,9 +1,9 @@
 tool_path		= ..\tolset\z_tools
 ipl_path		= ipl
-make    		= $(tool_path)\make.exe -r
-nask    		= $(tool_path)\nask.exe
-edimg   		= $(tool_path)\edimg.exe
-imgtol  		= $(tool_path)\imgtol.com
+make			= $(tool_path)\make.exe -r
+nask			= $(tool_path)\nask.exe
+edimg			= $(tool_path)\edimg.exe
+imgtol			= $(tool_path)\imgtol.com
 qemu			= $(tool_path)\qemu
 makefile_name	= makefile
 ipl_nas_name	= $(ipl_path)\ipl.nas
@@ -50,7 +50,9 @@ install:$(makefile_name) $(img_name)
 clean:$(makefile_name)
 	del $(ipl_bin_name)
 	del $(ipl_lst_name)
+	del $(lst_name)
 
 delete:$(makefile_name)
 	$(make) clean
 	del $(img_name)
+	del $(sys_name)
