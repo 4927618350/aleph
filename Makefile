@@ -41,18 +41,12 @@ $(img_name):$(makefile_name) $(ipl_name) $(sys_name)
 
 %.gas:$(makefile_name) %.c 
 	$(cc1) -o $*.gas $*.c 
-	echo -------------
-	dir
 
 %.nas:$(makefile_name) %.gas
 	$(gas2nask) $*.gas $*.nas
-	echo -------------
-	dir
 
 %.obj:$(makefile_name) %.nas
 	$(nask) $*.nas $*.obj $*.lst
-	echo -------------
-	dir
 
 %.bim:$(makefile_name) %.obj
 	$(obj2bim)\
