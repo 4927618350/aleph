@@ -2,9 +2,9 @@ name			= aleph
 tool_path		= ..\z_tools
 ipl_path		= ipl
 makefile_name	= Makefile
-ams				= amshead
-boot			= bootpack
-func			= func
+ams_path		= amshead
+boot_path		= bootpack
+func_path		= func
 stack			= 3136KB
 
 make			= $(tool_path)\make.exe -r
@@ -18,15 +18,15 @@ obj2bim			= $(tool_path)\obj2bim.exe
 bim2hrb			= $(tool_path)\bim2hrb.exe
 
 ipl_name		= $(ipl_path)\ipl.bin
-amshead_name	= $(ams).bin
-bootpack_hrb	= $(boot).hrb
-bootpack_bim	= $(boot).bim
-bootpack_obj	= $(boot).obj
-bootpack_map	= $(boot).map
-bootpack_nas	= $(boot).nas
+amshead_name	= $(ams_path)\amshead.bin
+bootpack_hrb	= $(boot_path)\bootpack.hrb
+bootpack_bim	= $(boot_path)\bootpack.bim
+bootpack_obj	= $(boot_path)\bootpack.obj
+bootpack_map	= $(boot_path)\bootpack.map
+bootpack_nas	= $(boot_path)\bootpack.nas
 sys_name		= $(name).sys
 img_name		= $(name).img
-func_name		= $(func).obj
+func_name		= $(func_path)\func.obj
 
 default:
 	$(make) run
@@ -82,15 +82,15 @@ install:$(makefile_name) $(img_name)
 	$(imgtol) w a:$(img_name)
 
 clean:$(makefile_name)
-	-del *.bin $(ipl_path)\*.bin
-	-del *.lst $(ipl_path)\*.lst
 	-del $(bootpack_nas)
-	-del *.sys
-	-del *.gas
-	-del *.map
-	-del *.hrb
-	-del *.obj
-	-del *.bim
+	-del /s *.bin
+	-del /s *.lst
+	-del /s *.sys
+	-del /s *.gas
+	-del /s *.map
+	-del /s *.hrb
+	-del /s *.obj
+	-del /s *.bim
 
 delete:$(makefile_name)
 	$(make) clean
