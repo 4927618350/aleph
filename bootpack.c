@@ -1,6 +1,6 @@
 #define main HariMain
-void io_hlt(void);
-void main(void)
+void io_hlt();
+int main()
 {
 fin:
 	io_hlt();

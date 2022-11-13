@@ -23,6 +23,7 @@ bootpack_hrb	= $(boot).hrb
 bootpack_bim	= $(boot).bim
 bootpack_obj	= $(boot).obj
 bootpack_map	= $(boot).map
+bootpack_nas	= $(boot).nas
 sys_name		= $(name).sys
 img_name		= $(name).img
 func_name		= $(func).obj
@@ -83,11 +84,13 @@ install:$(makefile_name) $(img_name)
 clean:$(makefile_name)
 	-del *.bin $(ipl_path)\*.bin
 	-del *.lst $(ipl_path)\*.lst
-	-del bootpack.nas
+	-del $(bootpack_nas)
 	-del *.sys
 	-del *.gas
 	-del *.map
 	-del *.hrb
+	-del *.obj
+	-del *.bim
 
 delete:$(makefile_name)
 	$(make) clean
