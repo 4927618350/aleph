@@ -1,14 +1,14 @@
 #define main HariMain
 
 void io_hlt();
-void write_mem8(int addr, int data);
 
 int main()
 {
 	int i;
-	for (i = 0xa0000; i <= 0xaffff; ++i)
+	char *p = 0xa0000;
+	for (i = 0; i <= 0xffff; ++i)
 	{
-		write_mem8(i, 15);
+		p[i] = i & 0x0f;
 	}
 	while (1)
 	{
