@@ -3,8 +3,8 @@
 
 CYLS	EQU		10					; #define CYLS 10//读取10个柱面
 
-main:
-		ORG		0x7c00
+		ORG		0x7c00				; 程序装载到
+
 		JMP		entry
 		DB		0x90
 		DB		"ALEPHIPL"			; 启动区名称（8B）
@@ -70,10 +70,8 @@ next:
 		ADD		CH,1				; 下一个柱面
 		CMP		CH,CYLS				; 读CYLS个柱面
 		JB		readloop
-
-fin:
-		HLT
-		JMP     fin
+		MOV		[0x0ff0],CH
+		JMP		0xc200
 
 error:
 		MOV		SI,msg
@@ -87,6 +85,10 @@ showloop:
 		MOV		BX,15				; 颜色
 		INT		0x10				; bios:显卡
 		JMP		showloop
+
+fin:
+		HLT
+		JMP     fin
 
 msg:
 		DB		0x0a, 0x0a			; \n\n
