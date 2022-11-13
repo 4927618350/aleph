@@ -4,6 +4,8 @@ ipl_path		= ipl
 makefile_name	= Makefile
 ams				= amshead
 boot			= bootpack
+func			= func
+stack			= 3136KB
 
 make			= $(tool_path)\make.exe -r
 nask			= $(tool_path)\nask.exe
@@ -17,9 +19,13 @@ bim2hrb			= $(tool_path)\bim2hrb.exe
 
 ipl_name		= $(ipl_path)\ipl.bin
 amshead_name	= $(ams).bin
-bootpack_name	= $(boot).hrb
+bootpack_hrb	= $(boot).hrb
+bootpack_bim	= $(boot).bim
+bootpack_obj	= $(boot).obj
+bootpack_map	= $(boot).map
 sys_name		= $(name).sys
 img_name		= $(name).img
+func_name		= $(func).obj
 
 default:
 	$(make) run
@@ -27,8 +33,8 @@ default:
 %.bin:$(makefile_name) %.nas
 	$(nask) $*.nas $*.bin $*.lst
 
-$(sys_name):$(makefile_name) $(amshead_name) $(bootpack_name)
-	copy /b $(amshead_name)+$(bootpack_name) $(sys_name)
+$(sys_name):$(makefile_name) $(amshead_name) $(bootpack_hrb)
+	copy /b $(amshead_name)+$(bootpack_hrb) $(sys_name)
 
 $(img_name):$(makefile_name) $(ipl_name) $(sys_name)
 	$(edimg)\
@@ -51,12 +57,18 @@ $(img_name):$(makefile_name) $(ipl_name) $(sys_name)
 %.bim:$(makefile_name) %.obj
 	$(obj2bim)\
 		@$(tool_path)\haribote\haribote.rul\
-		out:$*.bim stack:3136KB map:$*.map\
+		out:$*.bim stack:$(stack) map:$*.map\
 		$*.obj
 
+$(bootpack_bim):$(makefile_name) $(bootpack_obj) $(func_name)
+	$(obj2bim)\
+		@$(tool_path)\haribote\haribote.rul\
+		out:$(bootpack_bim) stack:$(stack) map:$(bootpack_map)\
+		$(bootpack_obj) $(func_name)
 
 %.hrb:$(makefile_name) %.bim
 	$(bim2hrb) $*.bim $*.hrb 0
+
 
 img:$(makefile_name)
 	$(make) $(img_name)
@@ -71,7 +83,7 @@ install:$(makefile_name) $(img_name)
 clean:$(makefile_name)
 	-del *.bin $(ipl_path)\*.bin
 	-del *.lst $(ipl_path)\*.lst
-	-del bootpack.nasm
+	-del bootpack.nas
 	-del *.sys
 	-del *.gas
 	-del *.map

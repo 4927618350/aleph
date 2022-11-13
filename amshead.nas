@@ -3,7 +3,7 @@
 
 BOTPAK	EQU		0x00280000					; bootpack的加载位置
 DSKCAC	EQU		0x00100000					; 磁盘缓存位置
-DSKCAC0	EQU		0x00008000					; 磁盘缓存位置（实时模式）
+DSKCAC0	EQU		0x00008000					; 磁盘缓存位置 实时模式
 
 ; BOOT_INFO
 CYLS	EQU		0x0ff0						; #define CYLS 10//读取10个柱面
@@ -124,7 +124,7 @@ memcpy:
 GDT0:
 		RESB	8							; 空选择器
 		DW		0xffff,0x0000,0x9200,0x00cf	; 可读写段32bit
-		DW		0xffff,0x0000,0x9a28,0x0047	; 可执行段32bit（bootpack用）
+		DW		0xffff,0x0000,0x9a28,0x0047	; 可执行段32bit bootpack用
 		DW		0 
 		
 GDTR0:

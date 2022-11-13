@@ -1,6 +1,8 @@
-void HariMain(void)
+#define main HariMain
+void io_hlt(void);
+void main(void)
 {
 fin:
-	// HLT;
+	io_hlt();
 	goto fin;
 }
