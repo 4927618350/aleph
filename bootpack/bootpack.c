@@ -1,5 +1,22 @@
 #define main HariMain
 
+#define COL8_000000 0
+#define COL8_FF0000 1
+#define COL8_00FF00 2
+#define COL8_FFFF00 3
+#define COL8_0000FF 4
+#define COL8_FF00FF 5
+#define COL8_00FFFF 6
+#define COL8_FFFFFF 7
+#define COL8_C6C6C6 8
+#define COL8_840000 9
+#define COL8_008400 10
+#define COL8_848400 11
+#define COL8_000084 12
+#define COL8_840084 13
+#define COL8_008484 14
+#define COL8_848484 15
+
 typedef struct
 {
 	unsigned char r, g, b;
@@ -15,17 +32,16 @@ void io_store_eflags(int eflags);
 void init_palette();
 void set_palette(int start, int end, rgb *_rgb);
 void io_hlt();
+void boxfill8(unsigned char *vram, int xsize, unsigned char c, int x1, int y1, int x2, int y2);
 
 int main()
 {
-	int i;
 	char *p;
 	init_palette();
 	p = (char *)0xa0000;
-	for (i = 0; i <= 0xffff; ++i)
-	{
-		p[i] = i % 64;
-	}
+	boxfill8(p, 320, COL8_FF0000,  20,  20, 120, 120);
+	boxfill8(p, 320, COL8_00FF00,  70,  50, 170, 150);
+	boxfill8(p, 320, COL8_0000FF, 120,  80, 220, 180);
 	while (1)
 	{
 		io_hlt();
@@ -57,8 +73,8 @@ void init_palette()
 void set_palette(int start, int end, rgb *_rgb)
 {
 	int i, eflag;
-	eflag = io_load_eflags();				// 记录中断许可标志
-	io_cli();								// 中断许可标志为0 禁止中断
+	eflag = io_load_eflags(); // 记录中断许可标志
+	io_cli();				  // 中断许可标志为0 禁止中断
 	io_out8(0x03c8, start);
 	for (i = start; i <= end; ++i)
 	{
@@ -66,6 +82,17 @@ void set_palette(int start, int end, rgb *_rgb)
 		io_out8(0x03c9, _rgb[i].g / 4);
 		io_out8(0x03c9, _rgb[i].b / 4);
 	}
-	io_store_eflags(eflag);					// 恢复中断许可标志
+	io_store_eflags(eflag); // 恢复中断许可标志
+	return;
+}
+
+void boxfill8(unsigned char *vram, int xsize, unsigned char c, int x1, int y1, int x2, int y2)
+{
+	int x, y;
+	for (y = y1; y <= y2; ++y)
+	{
+		for (x = x1; x <= x2; ++x)
+			vram[y * xsize + x] = c;
+	}
 	return;
 }
