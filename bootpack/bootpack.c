@@ -36,10 +36,12 @@ void io_cli();
 void io_out8(int port, int data);
 int io_load_eflags();
 void io_store_eflags(int eflags);
+
 void init_palette();
 void set_palette(int start, int end, rgb *_rgb);
 void io_hlt();
 void boxfill8(unsigned char *vram, int xsize, unsigned char c, int x1, int y1, int x2, int y2);
+void init_screen(char *vram, int x, int y);
 
 int main()
 {
