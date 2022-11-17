@@ -1,27 +1,27 @@
-text size :    809(0x00329)
+text size :   1204(0x004B4)
 data size :     48(0x00030)
 bss  size :      0(0x00000)
 
 0x00000024 : (.text)
 0x00000024 : _HariMain
-0x00000090 : _init_palette
-0x00000210 : _set_palette
-0x000002A4 : _boxfill8
-0x000002F5 : _io_hlt
-0x000002F5 : (.text)
-0x000002F7 : _io_cli
-0x000002F9 : _io_sti
-0x000002FB : _io_stihlt
-0x000002FE : _io_in8
-0x00000309 : _io_in16
-0x00000315 : _io_in32
-0x0000031B : _io_out8
-0x00000325 : _io_out16
-0x00000330 : _io_out32
-0x0000033A : _io_load_eflags
-0x0000033D : _io_store_eflags
-0x00000344 : (.text)
-0x00000344 : _HariStartup
+0x0000021B : _init_palette
+0x0000039B : _set_palette
+0x0000042F : _boxfill8
+0x00000480 : _io_hlt
+0x00000480 : (.text)
+0x00000482 : _io_cli
+0x00000484 : _io_sti
+0x00000486 : _io_stihlt
+0x00000489 : _io_in8
+0x00000494 : _io_in16
+0x000004A0 : _io_in32
+0x000004A6 : _io_out8
+0x000004B0 : _io_out16
+0x000004BB : _io_out32
+0x000004C5 : _io_load_eflags
+0x000004C8 : _io_store_eflags
+0x000004CF : (.text)
+0x000004CF : _HariStartup
 0x00000000 : (.data)
 0x00000000 : (.data)
 0x00310000 : (.data)
