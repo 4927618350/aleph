@@ -7,6 +7,7 @@ boot_path		= bootpack
 func_path		= func
 stack			= 3136KB
 
+cmd				= cmd.exe /c
 make			= $(tool_path)\make.exe -r
 nask			= $(tool_path)\nask.exe
 edimg			= $(tool_path)\edimg.exe
@@ -35,7 +36,7 @@ default:
 	$(nask) $*.nas $*.bin $*.lst
 
 $(sys_name):$(makefile_name) $(amshead_name) $(bootpack_hrb)
-	copy /b $(amshead_name)+$(bootpack_hrb) $(sys_name)
+	$(cmd) copy /b $(amshead_name)+$(bootpack_hrb) $(sys_name)
 
 $(img_name):$(makefile_name) $(ipl_name) $(sys_name)
 	$(edimg)\
@@ -75,23 +76,23 @@ img:$(makefile_name)
 	$(make) $(img_name)
 
 run:$(makefile_name) $(img_name)
-	copy $(img_name) $(qemu)\fdimage0.bin
+	$(cmd) copy $(img_name) $(qemu)\fdimage0.bin
 	$(make) -C $(qemu)
 
 install:$(makefile_name) $(img_name)
 	$(imgtol) w a:$(img_name)
 
 clean:$(makefile_name)
-	-del $(bootpack_nas)
-	-del /s *.bin
-	-del /s *.lst
-	-del /s *.sys
-	-del /s *.gas
-	-del /s *.map
-	-del /s *.hrb
-	-del /s *.obj
-	-del /s *.bim
+	$(cmd) del $(bootpack_nas)
+	$(cmd) "del /s *.bin"
+	$(cmd) "del /s *.lst"
+	$(cmd) "del /s *.sys"
+	$(cmd) "del /s *.gas"
+	$(cmd) "del /s *.map"
+	$(cmd) "del /s *.hrb"
+	$(cmd) "del /s *.obj"
+	$(cmd) "del /s *.bim"
 
 delete:$(makefile_name)
 	$(make) clean
-	-del $(img_name)
+	$(cmd) del $(img_name)

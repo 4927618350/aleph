@@ -1,0 +1,9 @@
+bootpack\bootpack.nas
+*.bin
+*.lst
+*.sys
+*.gas
+*.map
+*.hrb
+*.obj
+*.bim
